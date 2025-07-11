@@ -1,39 +1,40 @@
-import { Grid } from '@mui/material';
-import HeaderUI from './components/HeaderUI';
-import AlertUI from './components/AlertUI';
-import SelectorUI from './components/SelectorUI';
+// src/App.tsx
+
+import { useState } from 'react';
+import './App.css';
+import SelectorUI from './SelectorUI';
+import DataFetcher from './DataFetcher';
+
+// Definimos el tipo para las coordenadas
+type Coordinates = {
+  latitude: number;
+  longitude: number;
+};
 
 function App() {
-return (
-<Grid container spacing={5} justifyContent="center" alignItems="center">
+  // Estado para guardar las coordenadas de la ciudad seleccionada
+  const [selectedCoords, setSelectedCoords] = useState<Coordinates | null>(null);
 
-{/* Encabezado */}
-<Grid size = {{ xs: 12, md: 3}}>Elemento: Encabezado<HeaderUI />
-</Grid>
+  // Función que se pasará al componente hijo para actualizar el estado del padre
+  const handleCityChange = (coords: Coordinates) => {
+    setSelectedCoords(coords);
+  };
 
-{/* Alerta */}
-      <Grid size= {{ xs: 12, md: 3}}container justifyContent="right" alignItems="center">
-        <AlertUI config={{ description: "No se preveen lluvias" }} />
-      </Grid>
-      
-{/* Selector */}
-<Grid size={{ xs: 12, md: 3 }}>
-        <SelectorUI /></Grid>
+  return (
+    <>
+      <h1>Dashboard del Clima</h1>
+      <div className="card">
+        {/* El componente hijo recibe la función para notificar al padre */}
+        <SelectorUI onCityChange={handleCityChange} />
 
-{/* Indicadores */}
-<Grid size={{ xs: 12, md: 9 }}>Elemento: Indicadores</Grid>
-
-{/* Gráfico */}
-<Grid>Elemento: Gráfico</Grid>
-
-{/* Tabla */}
-<Grid>Elemento: Tabla</Grid>
-
-{/* Información adicional */}
-<Grid>Elemento: Información adicional</Grid>
-
-</Grid>
-);
+        {/* El componente de datos recibe el estado actual para hacer la petición */}
+        <DataFetcher coordinates={selectedCoords} />
+      </div>
+      <p className="read-the-docs">
+        Datos meteorológicos proporcionados por Open-Meteo.
+      </p>
+    </>
+  );
 }
 
 export default App;
