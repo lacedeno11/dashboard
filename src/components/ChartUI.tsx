@@ -46,21 +46,20 @@ export default function ChartUI(props: ChartUIProps) {
                     {
                         data: chartTemperature,
                         label: `Temp. (${hourlyUnits?.temperature_2m || '°C'})`,
-                        valueFormatter: (value: number) => `${value} ${hourlyUnits?.temperature_2m || '°C'}`
+                        valueFormatter: (value: number | null) => value !== null ? `${value} ${hourlyUnits?.temperature_2m || '°C'}` : ''
                     },
                     {
                         data: chartWindSpeed,
                         label: `Viento (${hourlyUnits?.wind_speed_10m || 'km/h'})`,
-                        valueFormatter: (value: number) => `${value} ${hourlyUnits?.wind_speed_10m || 'km/h'}`
+                        valueFormatter: (value: number | null) => value !== null ? `${value} ${hourlyUnits?.wind_speed_10m || 'km/h'}` : ''
                     }
                 ]}
                 height={300}
                 margin={{ left: 60, right: 60, top: 40, bottom: 80 }}
                 slotProps={{
                     legend: {
-                        direction: 'row',
-                        position: { vertical: 'top', horizontal: 'middle' },
-                        padding: 0
+                        direction: 'horizontal',
+                        position: { vertical: 'top', horizontal: 'center' }
                     },
                 }}
             />

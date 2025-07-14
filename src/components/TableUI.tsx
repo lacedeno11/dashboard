@@ -1,7 +1,6 @@
 // src/components/TableUI.tsx
 
-import React from 'react';
-import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid';
+import { DataGrid, type GridColDef, type GridRowsProp } from '@mui/x-data-grid';
 import { Box, Typography } from '@mui/material';
 
 interface TableUIProps {

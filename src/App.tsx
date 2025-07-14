@@ -7,8 +7,9 @@ import DataFetcher from './DataFetcher';
 import IndicatorUI from './components/IndicatorUI';
 import TableUI from './components/TableUI'; // Nuevo
 import ChartUI from './components/ChartUI'; // Nuevo
+import { Container, Box, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import {Container, Box, Typography } from '@mui/material';
+
 
 // Definimos el tipo para las coordenadas
 type Coordinates = {
@@ -37,83 +38,77 @@ function App() {
       </Box>
 
       <Grid container spacing={3} alignItems="flex-start">
-
         {/* Selector de Ciudad */}
         <Grid item xs={12} md={3}>
           <SelectorUI onCityChange={handleCityChange} />
         </Grid>
-
-        {/* Indicadores del Clima - Contenedor */}
-        <Grid item xs={12} md={9} container spacing={2}>
-
-          {/* Renderizado condicional de los datos obtenidos */}
-          {loading && (
-            <Grid item xs={12}>
-              <Typography variant="h6" align="center">Cargando datos...</Typography>
-            </Grid>
-          )}
-
-          {error && (
-            <Grid item xs={12}>
-              <Typography variant="h6" color="error" align="center">Error: {error}</Typography>
-            </Grid>
-          )}
-
-          {data && (
-            <>
-              {/* Indicadores con datos actuales */}
-              <Grid item xs={12} sm={6} md={3}>
-                <IndicatorUI
-                  title='Temperatura (2m)'
-                  description={data.current.temperature_2m + " " + data.current_units.temperature_2m}
-                />
+        {/* Contenedor principal para indicadores, gráfico y tabla */}
+        <Grid item xs={12} md={9}>
+          <Grid container spacing={2}>
+            {/* Renderizado condicional de los datos obtenidos */}
+            {loading && (
+              <Grid item xs={12}>
+                <Typography variant="h6" align="center">Cargando datos...</Typography>
               </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <IndicatorUI
-                  title='Temperatura aparente'
-                  description={data.current.apparent_temperature + " " + data.current_units.apparent_temperature}
-                />
+            )}
+            {error && (
+              <Grid item xs={12}>
+                <Typography variant="h6" color="error" align="center">Error: {error}</Typography>
               </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <IndicatorUI
-                  title='Velocidad del viento'
-                  description={data.current.wind_speed_10m + " " + data.current_units.wind_speed_10m}
-                />
+            )}
+            {data && (
+              <>
+                {/* Indicadores en una fila */}
+                <Grid item xs={12}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6} md={3}>
+                      <IndicatorUI
+                        title='Temperatura (2m)'
+                        description={data.current.temperature_2m + " " + data.current_units.temperature_2m}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={3}>
+                      <IndicatorUI
+                        title='Temperatura aparente'
+                        description={data.current.apparent_temperature + " " + data.current_units.apparent_temperature}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={3}>
+                      <IndicatorUI
+                        title='Velocidad del viento'
+                        description={data.current.wind_speed_10m + " " + data.current_units.wind_speed_10m}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={3}>
+                      <IndicatorUI
+                        title='Humedad relativa'
+                        description={data.current.relative_humidity_2m + " " + data.current_units.relative_humidity_2m}
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+                {/* Gráfico y tabla en la siguiente fila */}
+                <Grid item xs={12} md={6}>
+                  <ChartUI
+                    hourlyData={data.hourly}
+                    hourlyUnits={data.hourly_units}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TableUI
+                    hourlyData={data.hourly}
+                    hourlyUnits={data.hourly_units}
+                  />
+                </Grid>
+              </>
+            )}
+            {!loading && !error && !data && (
+              <Grid item xs={12}>
+                <Typography variant="h6" align="center">Selecciona una ciudad para ver el pronóstico.</Typography>
               </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <IndicatorUI
-                  title='Humedad relativa'
-                  description={data.current.relative_humidity_2m + " " + data.current_units.relative_humidity_2m}
-                />
-              </Grid>
-
-              {/* Gráfico de pronóstico horario */}
-              <Grid item xs={12} md={6} sx={{ display: { xs: "block", md: "block" } }}>
-                <ChartUI
-                  hourlyData={data.hourly}
-                  hourlyUnits={data.hourly_units}
-                />
-              </Grid>
-
-              {/* Tabla de pronóstico horario */}
-              <Grid item xs={12} md={6} sx={{ display: { xs: "block", md: "block" } }}>
-                <TableUI
-                  hourlyData={data.hourly}
-                  hourlyUnits={data.hourly_units}
-                />
-              </Grid>
-            </>
-          )}
-           {!loading && !error && !data && (
-            <Grid item xs={12}>
-              <Typography variant="h6" align="center">Selecciona una ciudad para ver el pronóstico.</Typography>
-            </Grid>
-          )}
+            )}
+          </Grid>
         </Grid>
-
       </Grid>
       <Box sx={{ mt: 4, textAlign: 'center' }}>
         <Typography variant="body2" color="text.secondary">
