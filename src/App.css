@@ -40,3 +40,31 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Estilos para asegurar que el contenido de las tarjetas se muestre correctamente */
+.MuiCardContent-root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; /* Asegura que el contenido ocupe toda la altura disponible */
+  box-sizing: border-box; /* Incluye padding y borde en la altura */
+}
+
+.MuiCardContent-root .MuiTypography-root {
+  word-wrap: break-word; /* Permite que el texto largo se rompa y vaya a la siguiente línea */
+  white-space: normal;  /* Asegura que el espacio en blanco se maneje normalmente */
+}
+
+.MuiCardContent-root .MuiTypography-h5 {
+  font-size: 1.5rem; /* Ajusta este valor si es necesario */
+}
+
+.MuiCardContent-root .MuiTypography-body2 {
+  font-size: 0.875rem; /* Ajusta este valor si es necesario */
+  margin-top: 8px; /* Pequeño margen entre el valor y el nombre */
+}
+
+/* Asegura que las tarjetas tengan una altura mínima si es necesario */
+.MuiCard-root {
+    min-height: 100px; /* Ajusta según sea necesario para que quepa el contenido */
+}

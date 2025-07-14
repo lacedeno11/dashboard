@@ -4,6 +4,11 @@ import { useState } from 'react';
 import './App.css';
 import SelectorUI from './SelectorUI';
 import DataFetcher from './DataFetcher';
+import IndicatorUI from './components/IndicatorUI';
+import TableUI from './components/TableUI'; // Nuevo
+import ChartUI from './components/ChartUI'; // Nuevo
+import Grid from '@mui/material/Grid';
+import {Container, Box, Typography } from '@mui/material';
 
 // Definimos el tipo para las coordenadas
 type Coordinates = {
@@ -20,20 +25,102 @@ function App() {
     setSelectedCoords(coords);
   };
 
-  return (
-    <>
-      <h1>Dashboard del Clima</h1>
-      <div className="card">
-        {/* El componente hijo recibe la función para notificar al padre */}
-        <SelectorUI onCityChange={handleCityChange} />
+  // Consumir el hook DataFetcher
+  const { data, loading, error } = DataFetcher({ coordinates: selectedCoords });
 
-        {/* El componente de datos recibe el estado actual para hacer la petición */}
-        <DataFetcher coordinates={selectedCoords} />
-      </div>
-      <p className="read-the-docs">
-        Datos meteorológicos proporcionados por Open-Meteo.
-      </p>
-    </>
+  return (
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <Box sx={{ my: 4 }}>
+        <Typography variant="h3" component="h1" gutterBottom align="center">
+          Dashboard del Clima
+        </Typography>
+      </Box>
+
+      <Grid container spacing={3} alignItems="flex-start">
+
+        {/* Selector de Ciudad */}
+        <Grid item xs={12} md={3}>
+          <SelectorUI onCityChange={handleCityChange} />
+        </Grid>
+
+        {/* Indicadores del Clima - Contenedor */}
+        <Grid item xs={12} md={9} container spacing={2}>
+
+          {/* Renderizado condicional de los datos obtenidos */}
+          {loading && (
+            <Grid item xs={12}>
+              <Typography variant="h6" align="center">Cargando datos...</Typography>
+            </Grid>
+          )}
+
+          {error && (
+            <Grid item xs={12}>
+              <Typography variant="h6" color="error" align="center">Error: {error}</Typography>
+            </Grid>
+          )}
+
+          {data && (
+            <>
+              {/* Indicadores con datos actuales */}
+              <Grid item xs={12} sm={6} md={3}>
+                <IndicatorUI
+                  title='Temperatura (2m)'
+                  description={data.current.temperature_2m + " " + data.current_units.temperature_2m}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6} md={3}>
+                <IndicatorUI
+                  title='Temperatura aparente'
+                  description={data.current.apparent_temperature + " " + data.current_units.apparent_temperature}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6} md={3}>
+                <IndicatorUI
+                  title='Velocidad del viento'
+                  description={data.current.wind_speed_10m + " " + data.current_units.wind_speed_10m}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6} md={3}>
+                <IndicatorUI
+                  title='Humedad relativa'
+                  description={data.current.relative_humidity_2m + " " + data.current_units.relative_humidity_2m}
+                />
+              </Grid>
+
+              {/* Gráfico de pronóstico horario */}
+              <Grid item xs={12} md={6} sx={{ display: { xs: "block", md: "block" } }}>
+                <ChartUI
+                  hourlyData={data.hourly}
+                  hourlyUnits={data.hourly_units}
+                />
+              </Grid>
+
+              {/* Tabla de pronóstico horario */}
+              <Grid item xs={12} md={6} sx={{ display: { xs: "block", md: "block" } }}>
+                <TableUI
+                  hourlyData={data.hourly}
+                  hourlyUnits={data.hourly_units}
+                />
+              </Grid>
+            </>
+          )}
+           {!loading && !error && !data && (
+            <Grid item xs={12}>
+              <Typography variant="h6" align="center">Selecciona una ciudad para ver el pronóstico.</Typography>
+            </Grid>
+          )}
+        </Grid>
+
+      </Grid>
+      <Box sx={{ mt: 4, textAlign: 'center' }}>
+        <Typography variant="body2" color="text.secondary">
+          Datos meteorológicos proporcionados por Open-Meteo.
+        </Typography>
+      </Box>
+    </Container>
   );
 }
 
