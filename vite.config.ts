@@ -19,25 +19,29 @@ export default defineConfig({
         short_name: 'Dashboard del Clima',
         description: 'Proyecto 04 - dashboard del clima desarrollado con React y MUI',
         theme_color: '#D3D1D1',
+        background_color: '#ffffff',
+        display: 'standalone',
+        scope: '/dashboard/',
+        start_url: '/dashboard/',
         icons: [
           {
-            src: 'pwa-192x192.png',
+            src: '/dashboard/pwa-192x192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: 'pwa-512x512.png',
+            src: '/dashboard/pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png',
           },
           {
-            src: "pwa-maskable-192x192.png",
+            src: "/dashboard/pwa-maskable-192x192.png",
             sizes: "192x192",
             type: "image/png",
             purpose: "maskable"
           },
           {
-            src: "pwa-maskable-512x512.png",
+            src: "/dashboard/pwa-maskable-512x512.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "maskable"

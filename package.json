@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://LuisVergaraA.github.io/dashboard",
+  "homepage": "https://lacedeno11.github.io/dashboard",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -18,6 +18,7 @@
     "@mui/material": "^6.5.0",
     "@mui/x-charts": "^8.8.0",
     "@mui/x-data-grid": "^8.8.0",
+    "canvas": "^3.1.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

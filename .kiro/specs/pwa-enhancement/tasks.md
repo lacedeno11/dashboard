@@ -41,14 +41,14 @@
   - Ensure proper spacing between metrics, chart, and table sections
   - _Requirements: 3.1, 3.2, 3.4_
 
-- [ ] 7. Test PWA installation and offline functionality
+- [x] 7. Test PWA installation and offline functionality
   - Create test script to verify service worker registration
   - Test PWA installation prompt in supported browsers
   - Verify offline functionality by loading data then disconnecting
   - Test cache behavior with multiple API requests
   - _Requirements: 1.1, 1.4, 2.1, 2.4_
 
-- [ ] 8. Add build and deployment configuration
+- [x] 8. Add build and deployment configuration
   - Verify build process generates proper PWA files (manifest, service worker)
   - Test production build with npm run build && npm run preview
   - Ensure service worker and manifest are properly served
