@@ -7,8 +7,7 @@ import DataFetcher from './DataFetcher';
 import IndicatorUI from './components/IndicatorUI';
 import TableUI from './components/TableUI'; // Nuevo
 import ChartUI from './components/ChartUI'; // Nuevo
-import { Container, Box, Typography } from '@mui/material';
-import Grid from '@mui/material/Grid';
+import { Container, Box, Typography, Grid } from '@mui/material';
 
 
 // Definimos el tipo para las coordenadas
@@ -87,14 +86,15 @@ function App() {
                     </Grid>
                   </Grid>
                 </Grid>
-                {/* Gráfico y tabla en la siguiente fila */}
-                <Grid item xs={12} md={6}>
+                {/* Gráfico en fila completa */}
+                <Grid item xs={12}>
                   <ChartUI
                     hourlyData={data.hourly}
                     hourlyUnits={data.hourly_units}
                   />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                {/* Tabla en fila completa */}
+                <Grid item xs={12}>
                   <TableUI
                     hourlyData={data.hourly}
                     hourlyUnits={data.hourly_units}
