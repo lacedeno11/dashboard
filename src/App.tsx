@@ -8,6 +8,9 @@ import IndicatorUI from './components/IndicatorUI';
 import TableUI from './components/TableUI'; // Nuevo
 import ChartUI from './components/ChartUI'; // Nuevo
 import { Container, Box, Typography, Grid } from '@mui/material';
+import ClimaDashboard from './components/ClimaDashboard';
+
+
 
 
 // Definimos el tipo para las coordenadas
@@ -110,6 +113,11 @@ function App() {
           </Grid>
         </Grid>
       </Grid>
+
+      <Grid item xs={12}>
+        <ClimaDashboard />
+      </Grid>
+
       <Box sx={{ mt: 4, textAlign: 'center' }}>
         <Typography variant="body2" color="text.secondary">
           Datos meteorológicos proporcionados por Open-Meteo.
