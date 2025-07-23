@@ -43,7 +43,10 @@ export async function consultarClima(
     // La nueva respuesta tiene un `.text` directamente
     return response.text || "No se obtuvo una respuesta válida.";
   } catch (error: any) {
+
+    
     return `Error: ${error.message || "Error desconocido."}`;
   }
+
 }
 
